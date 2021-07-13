@@ -1,12 +1,19 @@
 let imageElement = document.querySelector('#imageHolder');
 let dotsElement = document.querySelectorAll('.dot');
+let imagesArray = [
+    "https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c521.png",
+    "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png",
+    "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c543.png",
+    "http://assets.stickpng.com/thumbs/584ac2d03ac3a570f94a666d.png",
+    "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c53e.png"
+];
 
 dotsElement.forEach((x) => {
     x.addEventListener('click', selectDot);
 })
 
 let sliderCurrentState = {
-    currentImage: 1,
+    currentImage: 0,
     currentDot: 0,
 }
 
@@ -14,8 +21,8 @@ function selectDot(e){
     clearDots();
     e.target.classList.add('currentDot');
     sliderCurrentState.currentDot = getCurrentDot();
-    sliderCurrentState.currentImage = getCurrentDot() + 1;
-    imageElement.src = sliderCurrentState.currentImage + ".png";
+    sliderCurrentState.currentImage = getCurrentDot();
+    imageElement.src = imagesArray[sliderCurrentState.currentImage];
 }
 
 function getCurrentDot(){
@@ -35,21 +42,17 @@ function clearDots(){
 // Interval auto rotate images
 
 function changeImage(){
-    if(sliderCurrentState.currentImage == 5){
-        sliderCurrentState.currentImage = 1;
-    } else {
-        sliderCurrentState.currentImage++;
-    }
-
     if(sliderCurrentState.currentDot == 4){
         sliderCurrentState.currentDot = 0;
     } else {
         sliderCurrentState.currentDot++;
     }
 
+    sliderCurrentState.currentImage = sliderCurrentState.currentDot;
+
     clearDots();
     dotsElement[sliderCurrentState.currentDot].classList.add('currentDot');
-    imageElement.src = sliderCurrentState.currentImage + ".png";
+    imageElement.src = imagesArray[sliderCurrentState.currentImage];
 }
 
 setInterval(changeImage, 3000); 
